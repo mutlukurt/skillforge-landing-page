@@ -43,6 +43,11 @@ A modern, responsive landing page for SkillForge - an innovative online learning
 ```
 Skillforge-landing-page/
 ├── index.html          # Main HTML file
+├── css/
+│   └── styles.css      # All CSS styles and animations
+├── js/
+│   └── main.js         # JavaScript functionality
+├── images/             # Image assets (future use)
 ├── README.md           # Project documentation
 └── LICENSE             # MIT License
 ```
