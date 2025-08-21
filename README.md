@@ -1,5 +1,7 @@
 # SkillForge Landing Page
 
+🌐 **Live Demo**: [https://mutlukurt.github.io/skillforge-landing-page/](https://mutlukurt.github.io/skillforge-landing-page/)
+
 A modern, responsive landing page for SkillForge - an innovative online learning platform that helps users master tomorrow's skills today.
 
 ## 🚀 Features
