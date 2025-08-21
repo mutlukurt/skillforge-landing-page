@@ -9,6 +9,7 @@ body {
     line-height: 1.6;
     color: #333;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 /* Header */
@@ -47,11 +48,37 @@ nav {
 .nav-links a {
     color: white;
     text-decoration: none;
-    transition: opacity 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .nav-links a:hover {
     opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a.active {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.nav-links a.active::after {
+    width: 100%;
 }
 
 .cta-button {
@@ -75,6 +102,7 @@ nav {
     padding: 150px 20px 100px;
     position: relative;
     overflow: hidden;
+    scroll-margin-top: 100px;
 }
 
 .hero::before {
@@ -192,6 +220,7 @@ nav {
     margin-top: -50px;
     position: relative;
     z-index: 10;
+    scroll-margin-top: 100px;
 }
 
 .stats-container {
@@ -244,6 +273,7 @@ nav {
 .benefits {
     padding: 80px 20px;
     background: white;
+    scroll-margin-top: 100px;
 }
 
 .benefits-container {
@@ -324,6 +354,7 @@ nav {
 .courses {
     padding: 80px 20px;
     background: #f8f9fa;
+    scroll-margin-top: 100px;
 }
 
 .section-header {
@@ -467,6 +498,7 @@ nav {
 .innovations {
     padding: 80px 20px;
     background: #f0f4ff;
+    scroll-margin-top: 100px;
 }
 
 .innovations-grid {
@@ -534,6 +566,7 @@ nav {
 .testimonials {
     padding: 80px 20px;
     background: white;
+    scroll-margin-top: 100px;
 }
 
 .testimonials-container {
@@ -607,6 +640,7 @@ nav {
     text-align: center;
     position: relative;
     overflow: hidden;
+    scroll-margin-top: 100px;
 }
 
 .cta-section::before {

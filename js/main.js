@@ -12,15 +12,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                // Add active state to clicked link
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Smooth scroll with offset for fixed header
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const targetPosition = targetSection.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
             }
         });
     });
 
-    // Header scroll effect
+    // Header scroll effect and navigation highlighting
     const header = document.querySelector('header');
     let lastScrollTop = 0;
     
@@ -34,6 +42,24 @@ document.addEventListener('DOMContentLoaded', function() {
             header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
             header.style.backdropFilter = 'none';
         }
+        
+        // Update active navigation link based on scroll position
+        const sections = document.querySelectorAll('section[id]');
+        const scrollPosition = scrollTop + header.offsetHeight + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
         
         lastScrollTop = scrollTop;
     });
