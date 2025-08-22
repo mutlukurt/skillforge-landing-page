@@ -1,24 +1,58 @@
-// SkillForge Landing Page JavaScript
+/* ========================================
+   SKILLFORGE WEBSITE - MAIN JAVASCRIPT
+   ======================================== */
 
+// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
+    // ========================================
+    // 1. MOBILE HAMBURGER MENU FUNCTIONALITY
+    // ========================================
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
             
-            if (targetSection) {
-                // Add active state to clicked link
-                navLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Smooth scroll with offset for fixed header
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight;
+            // Prevent body scroll when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    // ========================================
+    // 2. SMOOTH SCROLLING FOR ANCHOR LINKS
+    // ========================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight - 20;
                 
                 window.scrollTo({
                     top: targetPosition,
@@ -28,50 +62,92 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Header scroll effect and navigation highlighting
-    const header = document.querySelector('header');
+    // ========================================
+    // 3. HEADER BACKGROUND CHANGE ON SCROLL
+    // ========================================
+    const header = document.querySelector('.header');
     let lastScrollTop = 0;
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
-        if (scrollTop > 100) {
-            header.style.background = 'rgba(102, 126, 234, 0.95)';
-            header.style.backdropFilter = 'blur(10px)';
-        } else {
-            header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            header.style.backdropFilter = 'none';
-        }
-        
-        // Update active navigation link based on scroll position
-        const sections = document.querySelectorAll('section[id]');
-        const scrollPosition = scrollTop + header.offsetHeight + 100;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
-                if (activeLink) {
-                    activeLink.classList.add('active');
-                }
+        if (header) {
+            if (scrollTop > 100) {
+                header.style.background = 'rgba(102, 126, 234, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                header.style.backdropFilter = 'blur(10px)';
+                header.style.boxShadow = 'none';
             }
-        });
-        
-        lastScrollTop = scrollTop;
+
+            // Hide/show header on scroll (optional)
+            if (scrollTop > lastScrollTop && scrollTop > 200) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        }
     });
 
-    // Animate stats on scroll
-    const statCards = document.querySelectorAll('.stat-card');
+    // ========================================
+    // 4. EMAIL SIGNUP FORM VALIDATION
+    // ========================================
+    const emailInput = document.querySelector('.email-input');
+    const signupBtn = document.querySelector('.cta-section .btn-primary');
+
+    if (emailInput && signupBtn) {
+        signupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            
+            if (validateEmail(email)) {
+                // Show success message
+                showNotification('Thank you for signing up! We\'ll be in touch soon.', 'success');
+                emailInput.value = '';
+                
+                // Optional: Send to analytics or tracking
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'sign_up', {
+                        method: 'email'
+                    });
+                }
+            } else {
+                showNotification('Please enter a valid email address.', 'error');
+                emailInput.focus();
+            }
+        });
+
+        // Real-time validation
+        emailInput.addEventListener('input', () => {
+            const email = emailInput.value.trim();
+            if (email && !validateEmail(email)) {
+                emailInput.style.borderColor = '#e53e3e';
+            } else {
+                emailInput.style.borderColor = '';
+            }
+        });
+
+        // Enter key support
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                signupBtn.click();
+            }
+        });
+    }
+
+    // ========================================
+    // 5. SCROLL-BASED ANIMATIONS
+    // ========================================
     const observerOptions = {
-        threshold: 0.5,
+        threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const statsObserver = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -80,74 +156,116 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    statCards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        statsObserver.observe(card);
+    // Observe elements for animation
+    document.querySelectorAll('.feature-item, .instructor-card, .section-header').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
     });
 
-    // Course card hover effects
-    const courseCards = document.querySelectorAll('.course-card');
+    // ========================================
+    // 6. PERFORMANCE OPTIMIZATIONS
+    // ========================================
     
-    courseCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-15px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
+    // Debounce scroll events
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
 
-    // Innovation card interactions
-    const innovationCards = document.querySelectorAll('.innovation-card');
-    
-    innovationCards.forEach(card => {
-        card.addEventListener('click', function() {
-            // Add click animation
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = 'translateY(-10px)';
-            }, 150);
-        });
-    });
-
-    // Email form submission
-    const emailForm = document.querySelector('.email-form');
-    const emailInput = document.querySelector('.email-input');
-    
-    if (emailForm) {
-        emailForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = emailInput.value.trim();
-            
-            if (email && isValidEmail(email)) {
-                // Show success message
-                showNotification('Thank you! You\'ll receive updates soon.', 'success');
-                emailInput.value = '';
-                
-                // Here you would typically send the email to your backend
-                console.log('Email submitted:', email);
+    // Optimized scroll handler
+    const optimizedScrollHandler = debounce(() => {
+        // Header scroll effects
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (header) {
+            if (scrollTop > 100) {
+                header.style.background = 'rgba(102, 126, 234, 0.95)';
             } else {
-                showNotification('Please enter a valid email address.', 'error');
+                header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            }
+        }
+    }, 10);
+
+    window.addEventListener('scroll', optimizedScrollHandler);
+
+    // ========================================
+    // 7. TOUCH DEVICE OPTIMIZATIONS
+    // ========================================
+    if ('ontouchstart' in window) {
+        // Add touch-specific classes
+        document.body.classList.add('touch-device');
+        
+        // Optimize touch interactions
+        document.querySelectorAll('.btn, .feature-item, .instructor-card').forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            el.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+    }
+
+    // ========================================
+    // 8. ACCESSIBILITY IMPROVEMENTS
+    // ========================================
+    
+    // Keyboard navigation for mobile menu
+    if (hamburger) {
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                hamburger.click();
             }
         });
     }
 
+    // Focus management for mobile menu
+    if (navMenu) {
+        const menuLinks = navMenu.querySelectorAll('a');
+        const firstLink = menuLinks[0];
+        const lastLink = menuLinks[menuLinks.length - 1];
+
+        navMenu.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                if (e.shiftKey && document.activeElement === firstLink) {
+                    e.preventDefault();
+                    lastLink.focus();
+                } else if (!e.shiftKey && document.activeElement === lastLink) {
+                    e.preventDefault();
+                    firstLink.focus();
+                }
+            }
+        });
+    }
+
+    // ========================================
+    // 9. UTILITY FUNCTIONS
+    // ========================================
+    
     // Email validation
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
     }
 
     // Notification system
     function showNotification(message, type = 'info') {
         // Remove existing notifications
-        const existingNotifications = document.querySelectorAll('.notification');
-        existingNotifications.forEach(notification => notification.remove());
-        
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
         // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
@@ -157,175 +275,200 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="notification-close">&times;</button>
             </div>
         `;
-        
+
         // Add styles
         notification.style.cssText = `
             position: fixed;
             top: 100px;
             right: 20px;
-            background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+            background: ${type === 'success' ? '#48bb78' : type === 'error' ? '#e53e3e' : '#4299e1'};
             color: white;
-            padding: 15px 20px;
+            padding: 1rem;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             z-index: 10000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            max-width: 300px;
+            max-width: 400px;
+            animation: slideInRight 0.3s ease;
         `;
-        
+
         // Add to page
         document.body.appendChild(notification);
-        
-        // Animate in
-        setTimeout(() => {
-            notification.style.transform = 'translateX(0)';
-        }, 100);
-        
+
         // Close button functionality
         const closeBtn = notification.querySelector('.notification-close');
         closeBtn.addEventListener('click', () => {
-            notification.style.transform = 'translateX(400px)';
-            setTimeout(() => notification.remove(), 300);
+            notification.remove();
         });
-        
-        // Auto remove after 5 seconds
+
+        // Auto-remove after 5 seconds
         setTimeout(() => {
             if (notification.parentNode) {
-                notification.style.transform = 'translateX(400px)';
-                setTimeout(() => notification.remove(), 300);
+                notification.remove();
             }
         }, 5000);
     }
 
-    // Mobile menu toggle (for future mobile navigation)
-    const mobileMenuBtn = document.createElement('button');
-    mobileMenuBtn.className = 'mobile-menu-btn';
-    mobileMenuBtn.innerHTML = '☰';
-    mobileMenuBtn.style.cssText = `
-        display: none;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        padding: 5px;
-    `;
+    // ========================================
+    // 10. INITIALIZATION AND CLEANUP
+    // ========================================
     
-    // Add mobile menu button to nav
-    const nav = document.querySelector('nav');
-    nav.insertBefore(mobileMenuBtn, nav.querySelector('.cta-button'));
+    // Initialize any additional features
+    initializeFeatures();
     
-    // Show mobile menu button on small screens
-    function checkMobileMenu() {
-        if (window.innerWidth <= 768) {
-            mobileMenuBtn.style.display = 'block';
-            document.querySelector('.nav-links').style.display = 'none';
-        } else {
-            mobileMenuBtn.style.display = 'none';
-            document.querySelector('.nav-links').style.display = 'flex';
+    // Cleanup function
+    function cleanup() {
+        // Remove event listeners if needed
+        window.removeEventListener('scroll', optimizedScrollHandler);
+    }
+
+    // Initialize additional features
+    function initializeFeatures() {
+        // Add loading states to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('btn-primary')) {
+                    this.style.opacity = '0.7';
+                    this.style.pointerEvents = 'none';
+                    
+                    setTimeout(() => {
+                        this.style.opacity = '';
+                        this.style.pointerEvents = '';
+                    }, 1000);
+                }
+            });
+        });
+
+        // Add hover effects for non-touch devices
+        if (!('ontouchstart' in window)) {
+            document.querySelectorAll('.feature-item, .instructor-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+    }
+
+    // ========================================
+    // 11. ERROR HANDLING
+    // ========================================
+    
+    // Global error handler
+    window.addEventListener('error', (e) => {
+        console.error('JavaScript error:', e.error);
+        // Could send to analytics service here
+    });
+
+    // Unhandled promise rejection handler
+    window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled promise rejection:', e.reason);
+        // Could send to analytics service here
+    });
+
+    // ========================================
+    // 12. ANALYTICS AND TRACKING (OPTIONAL)
+    // ========================================
+    
+    // Track page views
+    if (typeof gtag !== 'undefined') {
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            page_title: document.title,
+            page_location: window.location.href
+        });
+    }
+
+    // Track button clicks
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const buttonText = this.textContent.trim();
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'button_click', {
+                    button_text: buttonText,
+                    button_location: this.closest('section')?.id || 'unknown'
+                });
+            }
+        });
+    });
+
+    // ========================================
+    // 13. SERVICE WORKER REGISTRATION (PWA)
+    // ========================================
+    
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch((registrationError) => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        });
+    }
+
+    // ========================================
+    // 14. PERFORMANCE MONITORING
+    // ========================================
+    
+    // Monitor page load performance
+    window.addEventListener('load', () => {
+        if ('performance' in window) {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+            
+            if (loadTime > 3000) {
+                console.warn('Page load time is slow:', loadTime + 'ms');
+            }
+        }
+    });
+
+    // ========================================
+    // 15. CLEANUP ON PAGE UNLOAD
+    // ========================================
+    
+    window.addEventListener('beforeunload', cleanup);
+});
+
+// ========================================
+// ADDITIONAL CSS ANIMATIONS
+// ========================================
+
+// Add slide-in animation for notifications
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
         }
     }
     
-    // Check on load and resize
-    checkMobileMenu();
-    window.addEventListener('resize', checkMobileMenu);
+    .notification-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
     
-    // Mobile menu toggle functionality
-    mobileMenuBtn.addEventListener('click', function() {
-        const navLinks = document.querySelector('.nav-links');
-        const isVisible = navLinks.style.display !== 'none';
-        
-        if (isVisible) {
-            navLinks.style.display = 'none';
-            this.innerHTML = '☰';
-        } else {
-            navLinks.style.display = 'flex';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '100%';
-            navLinks.style.left = '0';
-            navLinks.style.right = '0';
-            navLinks.style.background = 'rgba(102, 126, 234, 0.95)';
-            navLinks.style.padding = '20px';
-            navLinks.style.backdropFilter = 'blur(10px)';
-            this.innerHTML = '✕';
-        }
-    });
-
-    // Parallax effect for hero section
-    const hero = document.querySelector('.hero');
-    const heroBefore = hero.querySelector('::before');
+    .notification-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+    }
     
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        
-        if (heroBefore) {
-            heroBefore.style.transform = `translateY(${rate}px)`;
-        }
-    });
-
-    // Add loading animation to page
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-
-    // Intersection Observer for fade-in animations
-    const fadeElements = document.querySelectorAll('.benefit-item, .innovation-card, .testimonial-card');
-    
-    const fadeObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    fadeElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        fadeObserver.observe(element);
-    });
-
-    // Console welcome message
-    console.log(`
-    🚀 Welcome to SkillForge!
-    
-    This landing page is built with:
-    - HTML5 for structure
-    - CSS3 for styling and animations
-    - Vanilla JavaScript for interactivity
-    
-    Feel free to explore the code and customize it for your needs!
-    `);
-
-});
-
-// Utility functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Performance optimization: Throttle scroll events
-const throttledScrollHandler = debounce(function() {
-    // Scroll handling logic here
-}, 16); // ~60fps
-
-window.addEventListener('scroll', throttledScrollHandler);
+    .notification-close:hover {
+        opacity: 0.8;
+    }
+`;
+document.head.appendChild(style);

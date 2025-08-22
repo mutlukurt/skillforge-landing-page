@@ -4,344 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillForge - Master Tomorrow's Skills Today</title>
+    <meta name="description" content="Join millions of learners worldwide in building expertise through interactive courses, expert mentorship, and hands-on projects that transform careers.">
+    <meta name="keywords" content="online learning, skills training, career development, professional courses, SkillForge">
+    <meta name="author" content="SkillForge">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="SkillForge - Master Tomorrow's Skills Today">
+    <meta property="og:description" content="Transform your career with expert-led training and cutting-edge learning innovations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://skillforge.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <nav>
+    <header class="header">
+        <nav class="nav-container">
             <a href="#" class="logo">SkillForge.</a>
-            <ul class="nav-links">
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#courses">Courses</a></li>
                 <li><a href="#instructors">Instructors</a></li>
-                <li><a href="#resources">Resources</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="#" class="cta-button">Get Started Free</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
+        <div class="hero-container">
+            <div class="hero-content">
                 <h1>Master Tomorrow's Skills Today</h1>
                 <p>Join millions of learners worldwide in building expertise through interactive courses, expert mentorship, and hands-on projects that transform careers.</p>
-                <div class="hero-buttons">
-                    <a href="#" class="btn-primary">Start Learning</a>
-                    <a href="#" class="btn-secondary">
-                        <span>▶</span>
-                        <span>Watch Demo</span>
+                <div class="cta-buttons">
+                    <a href="#signup" class="btn btn-primary">Get Started Free</a>
+                    <a href="#demo" class="btn btn-secondary">
+                        <span>▶</span> Watch Demo
                     </a>
                 </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">15k+</div>
+                        <div>Courses</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2M+</div>
+                        <div>Students</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4.9</div>
+                        <div>Rating</div>
+                    </div>
+                </div>
             </div>
-            <div class="hero-image">
-                <div style="background: white; border-radius: 20px; padding: 40px; position: relative; height: 400px; display: flex; align-items: center; justify-content: center;">
-                    <div style="text-align: center;">
-                        <div style="width: 200px; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 80px; color: white;">
-                            📚
-                        </div>
-                        <h3 style="color: #333; margin-bottom: 10px;">Learn at Your Pace</h3>
-                        <p style="color: #666;">Flexible scheduling that fits your life</p>
-                    </div>
-                    <div class="floating-card card-1">
-                        <div style="font-size: 24px;">🎯</div>
-                        <div style="font-size: 12px; color: #666; margin-top: 5px;">15K+ Courses</div>
-                    </div>
-                    <div class="floating-card card-2">
-                        <div style="font-size: 24px;">⭐</div>
-                        <div style="font-size: 12px; color: #666; margin-top: 5px;">4.9 Rating</div>
-                    </div>
+            <div class="hero-visual">
+                <div class="feature-card">
+                    <div class="icon">📚</div>
+                    <h3>Learn at Your Pace</h3>
+                    <p>Flexible scheduling that fits your life</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-icon">👥</div>
-                <div class="stat-number">2.5M+</div>
-                <div class="stat-label">Active Learners</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">📖</div>
-                <div class="stat-number">15K+</div>
-                <div class="stat-label">Expert Courses</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🏆</div>
-                <div class="stat-number">98%</div>
-                <div class="stat-label">Success Rate</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🌍</div>
-                <div class="stat-number">180+</div>
-                <div class="stat-label">Countries</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits">
-        <div class="benefits-container">
-            <div class="benefits-images">
-                <div class="benefit-img" style="grid-column: span 2;">
-                    <div style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); height: 200px; display: flex; align-items: center; justify-content: center; font-size: 48px;">
-                        🎓
-                    </div>
-                </div>
-                <div class="benefit-img">
-                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; display: flex; align-items: center; justify-content: center; font-size: 48px;">
-                        💡
-                    </div>
-                </div>
-                <div class="benefit-img">
-                    <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; display: flex; align-items: center; justify-content: center; font-size: 48px;">
-                        🚀
-                    </div>
-                </div>
-            </div>
-            <div class="benefits-content">
+    <!-- Features Section -->
+    <section class="section" id="courses">
+        <div class="container">
+            <div class="section-header">
                 <h2>Transform Your Career with Expert-Led Training</h2>
-                <div class="benefit-item">
-                    <div class="benefit-icon">✓</div>
-                    <div>
-                        <h4>Industry-Recognized Certificates</h4>
-                        <p>Earn credentials valued by top employers worldwide and showcase your expertise</p>
-                    </div>
+                <p>Discover what thousands of learners are mastering right now</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon icon-1">💡</div>
+                    <h3>Interactive Learning</h3>
+                    <p>Engage with hands-on projects and real-world applications that make learning stick.</p>
                 </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">✓</div>
-                    <div>
-                        <h4>Personalized Learning Paths</h4>
-                        <p>AI-powered recommendations that adapt to your goals and learning style</p>
-                    </div>
+                <div class="feature-item">
+                    <div class="icon icon-2">🚀</div>
+                    <h3>Career Acceleration</h3>
+                    <p>Fast-track your professional growth with industry-relevant skills and certifications.</p>
                 </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">✓</div>
-                    <div>
-                        <h4>1-on-1 Expert Mentorship</h4>
-                        <p>Get direct guidance from industry professionals who've been where you want to go</p>
-                    </div>
+                <div class="feature-item">
+                    <div class="icon icon-3">🎯</div>
+                    <h3>Personalized Paths</h3>
+                    <p>Customized learning journeys tailored to your goals and current skill level.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Courses Section -->
-    <section class="courses" id="courses">
-        <div class="section-header">
-            <h2>Trending Courses This Month</h2>
-            <p>Discover what thousands of learners are mastering right now</p>
-        </div>
-        <div class="courses-grid">
-            <div class="course-card">
-                <div class="course-image">🤖</div>
-                <div class="course-content">
-                    <span class="course-badge">BESTSELLER</span>
-                    <h3 class="course-title">Advanced AI & Machine Learning Bootcamp</h3>
-                    <p class="course-description">Master neural networks, deep learning, and deploy real-world AI applications</p>
-                    <div class="course-footer">
-                        <div class="course-stats">
-                            <span>⏱ 40 hours</span>
-                            <span>📊 Expert</span>
-                        </div>
-                        <a href="#" class="btn-primary" style="padding: 8px 20px; font-size: 14px;">Enroll Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-image">💼</div>
-                <div class="course-content">
-                    <span class="course-badge">NEW</span>
-                    <h3 class="course-title">Digital Marketing Mastery 2025</h3>
-                    <p class="course-description">Learn SEO, social media marketing, and data-driven strategies that convert</p>
-                    <div class="course-footer">
-                        <div class="course-stats">
-                            <span>⏱ 25 hours</span>
-                            <span>📊 Intermediate</span>
-                        </div>
-                        <a href="#" class="btn-primary" style="padding: 8px 20px; font-size: 14px;">Enroll Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-image">📊</div>
-                <div class="course-content">
-                    <span class="course-badge">TRENDING</span>
-                    <h3 class="course-title">Data Science with Python & R</h3>
-                    <p class="course-description">From data visualization to predictive modeling - become a data expert</p>
-                    <div class="course-footer">
-                        <div class="course-stats">
-                            <span>⏱ 35 hours</span>
-                            <span>📊 Intermediate</span>
-                        </div>
-                        <a href="#" class="btn-primary" style="padding: 8px 20px; font-size: 14px;">Enroll Now</a>
-                    </div>
-                </div>
+    <!-- Trending Courses -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trending Courses This Month</h2>
+                <p>Discover what thousands of learners are mastering right now</p>
             </div>
         </div>
     </section>
 
-    <!-- Instructor Section -->
-    <section class="instructor" id="instructors">
-        <div class="instructor-container">
-            <div class="instructor-image">
-                <div class="instructor-img-wrapper">
-                    <div style="width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 120px; color: white;">
-                        👨‍🏫
-                    </div>
-                </div>
-            </div>
-            <div class="instructor-content">
+    <!-- Instructors Section -->
+    <section class="section instructors" id="instructors">
+        <div class="container">
+            <div class="section-header">
                 <h2>Learn from Industry Experts</h2>
-                <p>Our instructors are not just teachers—they're practitioners who've built successful careers in their fields. They bring real-world experience, current industry insights, and proven methodologies to every lesson.</p>
-                <p>From Fortune 500 executives to startup founders, our expert network ensures you're learning the most relevant and up-to-date skills that employers actually want.</p>
+                <p>Our instructors are not just teachers—they're practitioners who've built successful careers in their fields.</p>
+            </div>
+            <div class="instructor-card">
+                <div class="instructor-avatar">👨‍🏫</div>
+                <div class="instructor-info">
+                    <h3>World-Class Instructors</h3>
+                    <p>They bring real-world experience, current industry insights, and proven methodologies to every lesson.</p>
+                    <p>From Fortune 500 executives to startup founders, our expert network ensures you're learning the most relevant and up-to-date skills that employers actually want.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Innovations Section -->
-    <section class="innovations" id="resources">
-        <div class="section-header">
-            <h2>Cutting-Edge Learning Innovations</h2>
-            <p>Experience the future of education with our advanced learning technologies</p>
-        </div>
-        <div class="innovations-grid">
-            <div class="innovation-card">
-                <div class="innovation-icon">🤖</div>
-                <h3 class="innovation-title">AI-Powered Learning</h3>
-                <p class="innovation-description">Personalized learning paths that adapt to your progress and learning style</p>
-                <a href="#" class="innovation-link">Learn More →</a>
-            </div>
-            <div class="innovation-card">
-                <div class="innovation-icon">🎮</div>
-                <h3 class="innovation-title">Interactive Simulations</h3>
-                <p class="innovation-description">Practice real-world scenarios in safe, controlled environments</p>
-                <a href="#" class="innovation-link">Learn More →</a>
-            </div>
-            <div class="innovation-card">
-                <div class="innovation-icon">📱</div>
-                <h3 class="innovation-title">Mobile-First Design</h3>
-                <p class="innovation-description">Learn anywhere, anytime with our responsive mobile platform</p>
-                <a href="#" class="innovation-link">Learn More →</a>
+    <!-- Innovation Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Cutting-Edge Learning Innovations</h2>
+                <p>Experience the future of education with our advanced learning technologies</p>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="section-header">
-            <h2>What Our Learners Say</h2>
-            <p>Real stories from real people who transformed their careers with SkillForge</p>
-        </div>
-        <div class="testimonials-container">
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonial-text">SkillForge completely changed my career trajectory. The AI course I took landed me a job at a top tech company with a 40% salary increase.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">S</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>Data Scientist at TechCorp</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonial-text">The mentorship program connected me with industry leaders who gave me insights I couldn't get anywhere else. Highly recommended!</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">M</div>
-                        <div class="author-info">
-                            <h4>Mike Rodriguez</h4>
-                            <p>Marketing Director at GrowthCo</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonial-text">I was skeptical about online learning, but SkillForge's interactive approach made complex topics easy to understand and apply.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">A</div>
-                        <div class="author-info">
-                            <h4>Alex Thompson</h4>
-                            <p>Software Engineer at StartupXYZ</p>
-                        </div>
-                    </div>
-                </div>
+    <!-- Testimonials -->
+    <section class="section instructors">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Learners Say</h2>
+                <p>Real stories from real people who transformed their careers with SkillForge</p>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2>Ready to Transform Your Future?</h2>
-            <p>Join millions of learners who are already building tomorrow's skills today. Start your journey with a free course.</p>
-            <form class="email-form">
-                <input type="email" class="email-input" placeholder="Enter your email address" required>
-                <button type="submit" class="submit-btn">Get Started Free</button>
-            </form>
+    <section class="cta-section section" id="signup">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Future?</h2>
+                <p>Join millions of learners who are already building tomorrow's skills today.<br>Start your journey with a free course.</p>
+                <div class="email-signup">
+                    <input type="email" class="email-input" placeholder="Enter your email address" aria-label="Email address">
+                    <a href="#" class="btn btn-primary" style="width: 100%; background: #2d3748; color: white;">Get Started Free</a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-brand">
-                <h3>SkillForge.</h3>
-                <p>Empowering learners worldwide with cutting-edge skills and expert knowledge. Transform your career with our innovative learning platform.</p>
-                <div class="social-links">
-                    <a href="#" title="Facebook">📘</a>
-                    <a href="#" title="Twitter">🐦</a>
-                    <a href="#" title="LinkedIn">💼</a>
-                    <a href="#" title="Instagram">📷</a>
-                    <a href="#" title="YouTube">📺</a>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>SkillForge.</h3>
+                    <p>Empowering learners worldwide with cutting-edge skills and expert knowledge. Transform your career with our innovative learning platform.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Mobile app">📱</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Email">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <a href="#">Courses</a>
+                    <a href="#">Instructors</a>
+                    <a href="#">Learning Paths</a>
+                    <a href="#">Certificates</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Partners</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Community</a>
+                    <a href="#">Feedback</a>
                 </div>
             </div>
-            <div class="footer-column">
-                <h4>Platform</h4>
-                <ul>
-                    <li><a href="#">Courses</a></li>
-                    <li><a href="#">Instructors</a></li>
-                    <li><a href="#">Learning Paths</a></li>
-                    <li><a href="#">Certificates</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SkillForge. All rights reserved. | Empowering learners worldwide.</p>
             </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Press</a></li>
-                    <li><a href="#">Partners</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Community</a></li>
-                    <li><a href="#">Feedback</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
-                    <li><a href="#">GDPR</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 SkillForge. All rights reserved. | Empowering learners worldwide.</p>
         </div>
     </footer>
 
