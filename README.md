@@ -1,5 +1,7 @@
 # SkillForge Landing Page - Mobile-First Responsive Design
 
+> 🌐 **[Live Demo](https://mutlukurt.github.io/skillforge-landing-page/)**
+
 A completely mobile-optimized landing page for SkillForge, an online learning platform. This project demonstrates modern mobile-first web development practices with comprehensive responsive design.
 
 ## 🚀 Mobile Optimization Features
